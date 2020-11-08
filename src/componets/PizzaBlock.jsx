@@ -2,7 +2,8 @@ import React from 'react';
 import cn from 'classnames';
 import Button from "./Button";
 
-const PizzaBlock = ({name, imageUrl, types, sizes, price, id, onAddToPizzaCard}) => {
+const PizzaBlock = ({name, imageUrl, types, sizes, price, id, onAddToPizzaCard, pizzaInCart}) => {
+  console.log(pizzaInCart)
   const availableType = ['тонкое', 'традиционное'];
   const availableSizes = [26, 30, 40];
 
@@ -50,7 +51,7 @@ const PizzaBlock = ({name, imageUrl, types, sizes, price, id, onAddToPizzaCard})
         </ul>
       </div>
       <div className="pizza-block__bottom">
-        <div className="pizza-block__price">{price} $</div>
+        <div className="pizza-block__price">{price} ₽</div>
         <Button className="button  button--add" onClick={() => {
           onAddToPizzaCard({
             name,
@@ -68,7 +69,7 @@ const PizzaBlock = ({name, imageUrl, types, sizes, price, id, onAddToPizzaCard})
             />
           </svg>
           <span>Добавить</span>
-          <i>0</i>
+          {pizzaInCart && <i>{pizzaInCart.length}</i>}
         </Button>
       </div>
     </div>

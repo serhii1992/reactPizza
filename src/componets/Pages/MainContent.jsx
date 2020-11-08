@@ -22,6 +22,7 @@ const MainContent = () => {
   const {category, sortBy} = useSelector((state) => state.filters);
 
   const isPizzasLoaded = useSelector((state) => state.pizzas.isPizzasLoaded);
+  const pizzaInCart = useSelector(({cart}) => cart.pizzaInCart);
 
   const selectСategory = React.useCallback((index) => {
     dispatch(setCategory(index));
@@ -31,7 +32,7 @@ const MainContent = () => {
     dispatch(setSortBy(type, name));
   }, []);
 
-  const onAddToPizzaCard = (objPizza) =>{
+  const onAddToPizzaCard = (objPizza) => {
     dispatch(addPizzaToCart(objPizza));
   }
   React.useEffect(() => {
@@ -42,12 +43,15 @@ const MainContent = () => {
     <div className="container">
       <div className="content__top">
         <Categories itemCategrie={namesCategories} selectСategory={selectСategory} activeCategory={category}/>
-        <SortPopup popup={filterPizzas} sortTypeBy={sortBy} onSelectSortPizzas={onSelectSortPizzas} />
+        <SortPopup popup={filterPizzas} sortTypeBy={sortBy} onSelectSortPizzas={onSelectSortPizzas}/>
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
         {isPizzasLoaded
-          ? (items.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} onAddToPizzaCard={onAddToPizzaCard} /> ))
+          ? (items.map((pizza) => <PizzaBlock pizzaInCart={ pizzaInCart[pizza.id]}
+                                              key={pizza.id}
+                                              {...pizza}
+                                              onAddToPizzaCard={onAddToPizzaCard}/>))
           : (Array(12).fill(0).map((el, i) => <PizzaPreloader key={i}/>))}
       </div>
     </div>
